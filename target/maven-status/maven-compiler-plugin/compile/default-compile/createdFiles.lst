@@ -1,5 +1,5 @@
-SampleController.class
-Collage.class
-Image.class
-TwitterAPI.class
-TwitterUser.class
+app/app2/TwitterAPI.class
+app/app2/Image.class
+app/app2/TwitterUser.class
+app/SampleController.class
+app/app2/Collage.class
