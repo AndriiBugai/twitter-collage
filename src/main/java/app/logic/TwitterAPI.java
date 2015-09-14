@@ -1,4 +1,4 @@
-package app.app2;
+package app.logic;
 
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
@@ -80,7 +80,7 @@ public class TwitterAPI {
 
 
                 } catch (Exception e) {
-
+                    return null;
                 }
             }
         } while ((cursor = ids.getNextCursor()) != 0);

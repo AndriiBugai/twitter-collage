@@ -1,5 +1,4 @@
 /media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/SampleController.java
-/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/app2/Collage.java
-/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/app2/TwitterAPI.java
-/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/app2/Image.java
-/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/app2/TwitterUser.java
+/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/logic/Collage.java
+/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/logic/TwitterAPI.java
+/media/strapper/WORK/BionicProject/webchallenge/src/main/java/app/logic/TwitterUser.java

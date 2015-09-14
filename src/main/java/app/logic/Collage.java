@@ -1,6 +1,4 @@
-package app.app2;
-
-import javax.imageio.ImageIO;
+package app.logic;
 
 
 import java.awt.Color;
@@ -9,10 +7,8 @@ import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by strapper on 13.09.15.
@@ -133,7 +129,6 @@ public class Collage {
                 x += image.getWidth();
                 j+=2;
                 if (x >= result.getWidth()) {
-                    System.out.println("uuuuuuuuuuuuuuuu");
                     x = 0;
                     j = 0;
                     y += image.getHeight();
@@ -174,7 +169,6 @@ public class Collage {
         at.scale(2.0, 2.0);
         AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
         after = scaleOp.filter(before, after);
-        System.out.println("width " +  after.getWidth() );
         return after;
     }
 

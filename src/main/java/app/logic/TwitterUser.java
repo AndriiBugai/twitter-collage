@@ -1,4 +1,4 @@
-package app.app2;
+package app.logic;
 
 import twitter4j.User;
 
@@ -19,7 +19,7 @@ public class TwitterUser implements Comparable<TwitterUser> {
     }
     @Override
     public String toString() {
-        return "app.app2.TwitterUser{" +
+        return "app.logic.TwitterUser{" +
                 "tweetsNumber=" + tweetsNumber +
                 ", id='" + id + '\'' +
                 '}';
