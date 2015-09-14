@@ -22,7 +22,6 @@ import java.util.TreeSet
 
 @Controller
 @EnableAutoConfiguration
-@SpringBootApplication
 public class SampleController {
 
 
