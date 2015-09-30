@@ -1,5 +1,5 @@
 # Solution for qualifying phase of UA Web Challenge VIII
-Web application that creates a collage (.png image) from Twitter avatars.
+Web application that creates collage (.png image) from Twitter avatars.
 
 Used technologies: 
 <ul>
