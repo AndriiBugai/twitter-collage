@@ -8,5 +8,4 @@ Used technologies:
 </ul>
 
 Try it 
-<a href="https://protected-meadow-8382.herokuapp.com/">here<a>
-!  
+<a href="https://protected-meadow-8382.herokuapp.com/">here<a>!  
