@@ -1,22 +1,17 @@
-package app; /**
- * Created by strapper on 12.09.15.
- */
-import app.logic.Collage;
-import app.logic.TwitterAPI;
-import app.logic.TwitterUser;
+package app;
+
+import app.collage.image.CollageBuilder;
+import app.github.integration.Hub4jClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @SpringBootApplication
@@ -24,27 +19,18 @@ public class SampleController extends SpringBootServletInitializer {
 
     @RequestMapping(value = "/collage", method = RequestMethod.GET,  produces = "image/png" )
     @ResponseBody
-    byte[] home(@RequestParam(value="size", required=false, defaultValue="100") String size, @RequestParam(value="login", required=false, defaultValue="100") String login) throws IOException {
+    byte[] home(@RequestParam(value="size", required=false, defaultValue="100") int size,
+                @RequestParam(value="login", required=false, defaultValue="100") String login,
+                @RequestParam(value="tileSize", required=false, defaultValue="50") int tileSize) throws IOException {
 
-        TwitterAPI twitterAPI = new TwitterAPI();
-        ArrayList<TwitterUser> list = twitterAPI.getFriends(login, Integer.valueOf(size));
-        if(list == null) {
-            BufferedImage in = ImageIO.read(new File("Error.png"));
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(in, "png", outputStream);
-            byte[] imageData = outputStream.toByteArray();
-            return imageData;
-        }
-        list = twitterAPI.cutList(list, Integer.valueOf(size));
-        list = twitterAPI.loadImages(list);
-        ArrayList<BufferedImage> listImage = twitterAPI.getImages(list);
+        Hub4jClient client = new Hub4jClient();
+        List<BufferedImage> images = client.getAvatars(size, login);
+        CollageBuilder collageBuilder = new CollageBuilder(images, tileSize);
+        BufferedImage collage = collageBuilder.createCollage();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(collage, "png", out);
 
-        BufferedImage result = Collage.createCollage(listImage);
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(result, "png", outputStream);
-        byte[] imageData = outputStream.toByteArray();
-        return imageData;
+        return out.toByteArray();
     }
 
     public static void main(String[] args) throws Exception {
