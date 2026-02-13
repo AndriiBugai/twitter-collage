@@ -1,4 +1,4 @@
-package app;
+package app.api;
 
 import app.collage.image.CollageBuilder;
 import app.github.integration.Hub4jClient;
