@@ -1,10 +1,9 @@
-package app.api;
+package app.controller;
 
 import app.collage.image.CollageBuilder;
+import app.dto.CollageRequest;
 import app.github.integration.Hub4jClient;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,21 +22,11 @@ public class CollageController extends SpringBootServletInitializer {
 
     @GetMapping(value = "/collage", produces = "image/png")
     public ResponseEntity<byte[]> generateCollage(
-            @RequestParam
-            @NotBlank
-            String login,
-
-            @RequestParam
-            @Min(4) @Max(100)
-            int size,
-
-            @RequestParam(defaultValue = "64")
-            @Min(25) @Max(100)
-            int tileSize
+            @Valid CollageRequest request
     ) throws IOException {
         Hub4jClient client = new Hub4jClient();
-        List<BufferedImage> images = client.getAvatars(size, login);
-        CollageBuilder collageBuilder = new CollageBuilder(images, tileSize);
+        List<BufferedImage> images = client.getAvatars(request.size(), request.login());
+        CollageBuilder collageBuilder = new CollageBuilder(images, request.tileSizeOrDefault());
         BufferedImage collage = collageBuilder.createCollage();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ImageIO.write(collage, "png", out);
