@@ -5,8 +5,6 @@ import app.github.integration.Hub4jClient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,7 @@ import java.util.List;
 
 @Controller
 @Validated
-public class SampleController extends SpringBootServletInitializer {
+public class CollageController extends SpringBootServletInitializer {
 
     @GetMapping(value = "/collage", produces = "image/png")
     public ResponseEntity<byte[]> generateCollage(
@@ -31,9 +29,12 @@ public class SampleController extends SpringBootServletInitializer {
 
             @RequestParam
             @Min(4) @Max(100)
-            int size
+            int size,
+
+            @RequestParam(defaultValue = "64")
+            @Min(25) @Max(100)
+            int tileSize
     ) throws IOException {
-        int tileSize = 64;
         Hub4jClient client = new Hub4jClient();
         List<BufferedImage> images = client.getAvatars(size, login);
         CollageBuilder collageBuilder = new CollageBuilder(images, tileSize);
