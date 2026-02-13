@@ -46,7 +46,7 @@ public class CollageBuilder {
         }
 
         int n = images.size();
-        int tileSize = images.get(0).getWidth(); // assume square & uniform
+        int tileSize = images.getFirst().getWidth(); // assume square & uniform
 
         int cols = (int) Math.ceil(Math.sqrt(n));
         int rows = (int) Math.ceil((double) n / cols);

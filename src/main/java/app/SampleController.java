@@ -21,7 +21,6 @@ import java.util.List;
 
 @Controller
 @Validated
-@SpringBootApplication
 public class SampleController extends SpringBootServletInitializer {
 
     @GetMapping(value = "/collage", produces = "image/png")
@@ -46,9 +45,5 @@ public class SampleController extends SpringBootServletInitializer {
                 .ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(out.toByteArray());
-    }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(SampleController.class, args);
     }
 }
