@@ -16,15 +16,11 @@ public class CollageBuilder {
     }
 
     public BufferedImage createCollage() {
-        List<BufferedImage> resizedImages = this.images
-                .stream().map(image -> this.resize(image, tileSize)).collect(Collectors.toList());
-
-        return this.combineIntoSquare(resizedImages);
+        return this.combineIntoSquare(images.stream().map(this::resize).collect(Collectors.toList()));
     }
 
-    private BufferedImage resize(BufferedImage original, int tileSize) {
-        BufferedImage resized =
-                new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB);
+    private BufferedImage resize(BufferedImage original) {
+        BufferedImage resized = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g = resized.createGraphics();
         try {
@@ -51,11 +47,7 @@ public class CollageBuilder {
         int cols = (int) Math.ceil(Math.sqrt(n));
         int rows = (int) Math.ceil((double) n / cols);
 
-        BufferedImage result = new BufferedImage(
-                cols * tileSize,
-                rows * tileSize,
-                BufferedImage.TYPE_INT_ARGB
-        );
+        BufferedImage result = new BufferedImage(cols * tileSize, rows * tileSize, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g = result.createGraphics();
         try {
