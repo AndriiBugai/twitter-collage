@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class Hub4jClientService {
+public class Hub4jClientService implements GitHubIntegrationService {
 
     private volatile GitHub github;
 
@@ -22,19 +22,7 @@ public class Hub4jClientService {
         this.imageLoader = imageLoader;
     }
 
-    // TODO check on synchronized and volatile options
-    private synchronized void loginToGitHub() {
-        if (github == null) {
-            final String githubToken = System.getenv("GITHUB_TOKEN");
-
-            try {
-                github = new GitHubBuilder().withOAuthToken(githubToken).build();
-            } catch (IOException e) {
-                throw new GitHubIntegrationException(e);
-            }
-        }
-    }
-
+    @Override
     public List<BufferedImage> getAvatars(String username,
                                           int collageSize,
                                           int tileSize) {
@@ -59,6 +47,19 @@ public class Hub4jClientService {
         return avatarsUrl.parallelStream()
                 .map(avatarUrl -> imageLoader.loadImage(avatarUrl, tileSize))
                 .collect(Collectors.toList());
+    }
+
+    // TODO check on synchronized and volatile options
+    private synchronized void loginToGitHub() {
+        if (github == null) {
+            final String githubToken = System.getenv("GITHUB_TOKEN");
+
+            try {
+                github = new GitHubBuilder().withOAuthToken(githubToken).build();
+            } catch (IOException e) {
+                throw new GitHubIntegrationException(e);
+            }
+        }
     }
 
 }
