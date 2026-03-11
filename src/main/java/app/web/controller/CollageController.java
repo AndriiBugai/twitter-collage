@@ -1,6 +1,6 @@
-package app.controller;
+package app.web.controller;
 
-import app.dto.CollageRequest;
+import app.web.dto.CollageRequest;
 import app.services.CollageService;
 import app.services.ImageEncodingService;
 import jakarta.validation.Valid;
@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 @Controller
 @Validated

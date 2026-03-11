@@ -1,7 +1,7 @@
-package app.services.github.integration;
+package app.integration.github;
 
 import app.exceptions.GitHubIntegrationException;
-import app.exceptions.GitHubUserFetchException;
+import app.exceptions.GitHubResourceNotFoundException;
 import org.kohsuke.github.*;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ public class Hub4jClientService implements GitHubIntegrationService {
 
     private volatile GitHub github;
 
-    private final ImageLoader imageLoader;
+    private final AvatarLoader avatarLoader;
 
-    public Hub4jClientService(ImageLoader imageLoader) {
-        this.imageLoader = imageLoader;
+    public Hub4jClientService(AvatarLoader avatarLoader) {
+        this.avatarLoader = avatarLoader;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Hub4jClientService implements GitHubIntegrationService {
         try {
             githubUser = github.getUser(username);
         } catch (IOException e) {
-            throw new GitHubUserFetchException(e);
+            throw new GitHubResourceNotFoundException(e);
         }
 
         List<String> avatarsUrl = StreamSupport
@@ -43,9 +43,13 @@ public class Hub4jClientService implements GitHubIntegrationService {
                 .map(GHPerson::getAvatarUrl)
                 .toList();
 
+        if (avatarsUrl.isEmpty()) {
+            throw new GitHubResourceNotFoundException(null);
+        }
+
         // load images in parallel
         return avatarsUrl.parallelStream()
-                .map(avatarUrl -> imageLoader.loadImage(avatarUrl, tileSize))
+                .map(avatarUrl -> avatarLoader.loadAvatar(avatarUrl, tileSize))
                 .collect(Collectors.toList());
     }
 

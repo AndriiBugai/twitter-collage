@@ -1,4 +1,4 @@
-package app.collage.image;
+package app.collage.builder;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

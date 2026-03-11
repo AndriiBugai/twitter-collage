@@ -34,10 +34,18 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(GitHubUserFetchException.class)
+    @ExceptionHandler(GitHubResourceNotFoundException.class)
     public ProblemDetail handleGitHubUserFetchException(Exception ex) {
         return ProblemDetail.forStatusAndDetail(
                 HttpStatus.NOT_FOUND,
+                ex.getMessage()
+        );
+    }
+
+    @ExceptionHandler(GitHubAvatarFetchException.class)
+    public ProblemDetail handleGitHubAvatarFetchException(Exception ex) {
+        return ProblemDetail.forStatusAndDetail(
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 ex.getMessage()
         );
     }
